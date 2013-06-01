@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mi primer mapa</title>
+		<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>
+		<style type="text/css">
+			html { height: 100% }
+      		body { height: 100%; }
+      		#contenedor_mapa { margin: auto 0 auto 0; } /*Contenedor*/
+    	</style>
+	</head>
+	<script type="text/javascript">
+  		function inicializarMapa() {  
+  			/* Primer parámetro corresponde a latitud y el segundo a la longitud */
+		  	var coordenadas = new google.maps.LatLng(19.45565, -70.707191);  
+		  	
+		  	var miEstilo = [ 
+				{ "elementType": "geometry", 
+	  				"stylers": [ 
+						{ "hue": "#0077ff" }, 
+						{ "saturation": 13 }, 
+						{ "lightness": 22 }, 
+						{ "gamma": 0.79 }, 
+						{ "weight": 0.5 }, 
+						{ "visibility": "simplified" } 
+				   ] 
+				} 
+			];
+			
+			var estilo = new google.maps.StyledMapType(miEstilo, {name: 'Styled Map'});
+
+		    var opciones = {
+		    	zoom:      5, /*El zoom puede iniciar en 1 */
+		        center:    coordenadas,
+		        MapTypeControlOptions: {
+					mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'estilo']
+				}
+		    }
+		    
+		    var mapa = new google.maps.Map(document.getElementById("contenedor_mapa"), opciones);
+		    
+		    mapa.mapTypes.set('estilo', estilo); /*Asignando el estilo*/
+			mapa.setMapTypeId('estilo');
+		    
+		    var marcador = new google.maps.Marker({
+				position: coordenadas,
+				title: "Mi primer marcador",
+				icon: 'imagenes/miIcono.png',
+				draggable: true,
+				animation: google.maps.Animation.DROP
+			});
+
+			marcador.setMap(mapa);
+			
+  		}
+		</script>
+	<body onload="inicializarMapa()">
+		<p>Utilizando la API de Google Maps</p>
+		<div id="contenedor_mapa" style="width:100%; height:100%"></div>
+	</body>
+</html>
